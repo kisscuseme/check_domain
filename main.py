@@ -54,8 +54,8 @@ def main():
 
         print(f"총 {len(four_letter_domains)}개의 4글자 .org 도메인 조합을 생성했습니다.")
 
-        available_output_file = "available_domains.txt"
-        checked_output_file = "checked_domains.txt"
+        available_output_file = r"C:\Users\kyle\Documents\kisscuseme\Data\available_domains.md"
+        checked_output_file = r"C:\Users\kyle\Documents\kisscuseme\Data\checked_domains.md"
 
         # Gabia 도메인 검색 페이지의 요소 선택자
         search_box_css_selector = "input[id='new_domain']" 
