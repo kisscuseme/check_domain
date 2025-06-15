@@ -127,21 +127,19 @@ def main():
                             if element.is_displayed():
                                 is_available = True
                                 print(f"{domain_to_check}는 사용 가능합니다 (ID: _singleResult, Text: '등록할 수 있는 도메인').")
+                                af.write(domain_to_check + "\n")
+                                af.flush() # 사용 가능한 도메인 파일에 즉시 기록
+                                time.sleep(0.5)
                             else:
                                 print(f"{domain_to_check}는 사용 불가능하거나 ID _singleResult 내 텍스트를 찾을 수 없습니다.")
                         except:
                             print(f"{domain_to_check}는 사용 불가능하거나 ID _singleResult 요소를 찾을 수 없습니다.")
-
                     except Exception as e_avail_check:
                         print(f"{domain_to_check} 사용 가능 여부 확인 중 오류: {e_avail_check}")
-
-                    if is_available:
-                        af.write(domain_to_check + "\n")
-                        af.flush() # 사용 가능한 도메인 파일에 즉시 기록
-                    
-                    # 확인된 도메인 기록
-                    cf.write(domain_to_check + "\n")
-                    cf.flush()
+                    finally:
+                        # 확인된 도메인 기록
+                        cf.write(domain_to_check + "\n")
+                        cf.flush()
 
                 except Exception as e_domain_loop:
                     print(f"{domain_to_check} 처리 중 오류 발생: {e_domain_loop}")
