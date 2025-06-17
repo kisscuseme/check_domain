@@ -1,3 +1,2 @@
-*.exe
-*.chromedriver
+*chromedriver*
 *.txt

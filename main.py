@@ -11,11 +11,11 @@ def main():
     # WebDriver 경로 설정 (chromedriver.exe가 스크립트와 동일한 디렉토리에 있다고 가정)
     # 사용자의 chromedriver.exe 경로에 맞게 수정해야 합니다.
     # 예: 'd:\\path\\to\\chromedriver.exe' 또는 '/usr/local/bin/chromedriver'
-    webdriver_path = './chromedriver.exe' 
+    webdriver_path = './chromedriver' 
     service = Service(executable_path=webdriver_path)
     options = webdriver.ChromeOptions()
-    # options.add_argument('--headless')  # 브라우저 창을 숨기려면 주석 해제
-    # options.add_argument('--disable-gpu') # headless 모드에서 필요할 수 있음
+    options.add_argument('--headless')  # 브라우저 창을 숨기려면 주석 해제
+    options.add_argument('--disable-gpu') # headless 모드에서 필요할 수 있음
     # options.add_argument("--window-size=1920,1080") # 해상도 설정
     # options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36")
     driver = None # Initialize driver to None
@@ -48,14 +48,15 @@ def main():
         for char1 in possible_chars:
             for char2 in possible_chars:
                 for char3 in possible_chars:
-                    for char4 in possible_chars:
-                        domain_name = f"{char1}{char2}{char3}{char4}"
-                        four_letter_domains.append(f"{domain_name}.org")
+                    domain_name = f"{char1}{char2}{char3}"
+                    four_letter_domains.append(f"{domain_name}.org")
 
-        print(f"총 {len(four_letter_domains)}개의 4글자 .org 도메인 조합을 생성했습니다.")
+        print(f"총 {len(four_letter_domains)}개의 3글자 .org 도메인 조합을 생성했습니다.")
 
-        available_output_file = r"C:\Users\kyle\Documents\kisscuseme\Data\available_domains.md"
-        checked_output_file = r"C:\Users\kyle\Documents\kisscuseme\Data\checked_domains.md"
+        # available_output_file = r"C:\Users\kyle\Documents\kisscuseme\Data\available_domains.md"
+        # checked_output_file = r"C:\Users\kyle\Documents\kisscuseme\Data\checked_domains.md"
+        available_output_file = r"/Users/a2130056/Documents/kisscuseme/Data/available_domains.md"
+        checked_output_file = r"/Users/a2130056/Documents/kisscuseme/Data/checked_domains.md"
 
         # Gabia 도메인 검색 페이지의 요소 선택자
         search_box_css_selector = "input[id='new_domain']" 
