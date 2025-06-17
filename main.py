@@ -6,17 +6,18 @@ from selenium.webdriver.chrome.service import Service
 import time
 import string
 import random # Added for random sleep
+import os
 
 def main():
     # WebDriver 경로 설정 (chromedriver.exe가 스크립트와 동일한 디렉토리에 있다고 가정)
     # 사용자의 chromedriver.exe 경로에 맞게 수정해야 합니다.
     # 예: 'd:\\path\\to\\chromedriver.exe' 또는 '/usr/local/bin/chromedriver'
-    webdriver_path = './chromedriver' 
+    webdriver_path = './chromedriver.exe' if os.name == 'nt' else './chromedriver' 
     service = Service(executable_path=webdriver_path)
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')  # 브라우저 창을 숨기려면 주석 해제
     options.add_argument('--disable-gpu') # headless 모드에서 필요할 수 있음
-    # options.add_argument("--window-size=1920,1080") # 해상도 설정
+    options.add_argument("--window-size=1920,1080") # 해상도 설정
     # options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36")
     driver = None # Initialize driver to None
     try:
@@ -53,10 +54,10 @@ def main():
 
         print(f"총 {len(four_letter_domains)}개의 3글자 .org 도메인 조합을 생성했습니다.")
 
-        # available_output_file = r"C:\Users\kyle\Documents\kisscuseme\Data\available_domains.md"
-        # checked_output_file = r"C:\Users\kyle\Documents\kisscuseme\Data\checked_domains.md"
-        available_output_file = r"/Users/a2130056/Documents/kisscuseme/Data/available_domains.md"
-        checked_output_file = r"/Users/a2130056/Documents/kisscuseme/Data/checked_domains.md"
+        data_dir = os.path.join(os.path.expanduser("~"), "Documents", "kisscuseme", "Data")
+        os.makedirs(data_dir, exist_ok=True)
+        available_output_file = os.path.join(data_dir, "available_domains.md")
+        checked_output_file = os.path.join(data_dir, "checked_domains.md")
 
         # Gabia 도메인 검색 페이지의 요소 선택자
         search_box_css_selector = "input[id='new_domain']" 
@@ -72,8 +73,7 @@ def main():
         except FileNotFoundError:
             print(f"'{checked_output_file}' 파일이 없습니다. 새로 시작합니다.")
 
-        with open(available_output_file, 'a', encoding='utf-8') as af, \
-             open(checked_output_file, 'a', encoding='utf-8') as cf:
+        with open(available_output_file, 'a', encoding='utf-8') as af, open(checked_output_file, 'a', encoding='utf-8') as cf:
             for i, domain_to_check in enumerate(four_letter_domains):
                 if domain_to_check in checked_domains:
                     print(f"({i+1}/{len(four_letter_domains)}) 이미 확인됨 (건너뛰기): {domain_to_check}")
